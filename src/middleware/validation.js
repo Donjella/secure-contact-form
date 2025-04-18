@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 
 const MIN_TIME_MS = 3000; // 3 seconds minimum
+const MAX_TIME_MS = 3600000; // 1 hour maximum (prevents old form submissions)
 
 const validateContactForm = [
   // Honeypot
@@ -21,6 +22,10 @@ const validateContactForm = [
     if (now - submittedAt < MIN_TIME_MS) {
       throw new Error("Form submitted too quickly. Possible bot.");
     }
+    
+    if (now - submittedAt > MAX_TIME_MS) {
+      throw new Error("Form expired. Please refresh the page and try again.");
+    }
 
     return true;
   }),
@@ -28,25 +33,33 @@ const validateContactForm = [
   // First name
   body("first_name")
     .trim()
-    .notEmpty()
-    .withMessage("First name is required."),
+    .notEmpty().withMessage("First name is required.")
+    .isLength({ min: 1 }).withMessage("First name is required.")
+    .isLength({ max: 50 }).withMessage("First name cannot exceed 50 characters.")
+    .matches(/^[A-Za-z\s\-'.]+$/).withMessage("First name contains invalid characters."),
 
   // Last name
   body("last_name")
     .trim()
-    .notEmpty()
-    .withMessage("Last name is required."),
+    .notEmpty().withMessage("Last name is required.")
+    .isLength({ min: 1 }).withMessage("Last name is required.")
+    .isLength({ max: 50 }).withMessage("Last name cannot exceed 50 characters.")
+    .matches(/^[A-Za-z\s\-'.]+$/).withMessage("Last name contains invalid characters."),
 
   // Email
   body("email")
-    .isEmail()
-    .withMessage("Valid email is required."),
+    .trim()
+    .notEmpty().withMessage("Email is required.")
+    .isEmail().withMessage("Please enter a valid email address.")
+    .normalizeEmail()
+    .isLength({ max: 100 }).withMessage("Email is too long."),
 
   // Message
   body("message")
     .trim()
-    .isLength({ min: 10 })
-    .withMessage("Message must be at least 10 characters."),
+    .notEmpty().withMessage("Message is required.")
+    .isLength({ min: 5 }).withMessage("Message must be at least  characters.")
+    .isLength({ max: 2000 }).withMessage("Message cannot exceed 2000 characters."),
 
   // Final validation check
   (req, res, next) => {
