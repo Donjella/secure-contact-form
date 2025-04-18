@@ -7,12 +7,14 @@ dotenv.config();
 
 const app = express();
 
-// Middleware to parse JSON and URL-encoded form data
+// Parse form and JSON data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files from /public
+app.use(express.static(path.join(__dirname, "..", "public")));
 
-// Contact route (you'll create this soon)
+// Contact route
 const contactRoutes = require("./routes/contactRoutes");
 app.use("/api/contact", contactRoutes);
 
