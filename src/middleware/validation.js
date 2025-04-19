@@ -13,10 +13,10 @@ const { body, validationResult } = require("express-validator");
 
 /**
  * Time constraints for detecting bot-like behavior in form submissions.
- * @constant {number} MIN_TIME_MS - Minimum time (30s) to consider form as human-submitted.
+ * @constant {number} MIN_TIME_MS - Minimum time (3s) to consider form as human-submitted.
  * @constant {number} MAX_TIME_MS - Maximum time (1hr) to prevent replay attacks.
  */
-const MIN_TIME_MS = 30000;     // 30 seconds
+const MIN_TIME_MS = 3000;     // 3 seconds
 const MAX_TIME_MS = 3600000;   // 1 hour
 
 /**
@@ -94,7 +94,7 @@ const validateContactForm = [
       return res.status(400).json({ errors: errors.array() });
     }
     next();
-  },
+  }
 ];
 
 module.exports = { validateContactForm };
