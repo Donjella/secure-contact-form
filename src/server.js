@@ -1,3 +1,4 @@
+// src/server.js
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
@@ -21,5 +22,5 @@ app.use("/api/contact", contactRoutes);
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });

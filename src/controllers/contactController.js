@@ -1,7 +1,8 @@
+// src/controllers/contactController.js
 const handleContact = (req, res) => {
     const { first_name, last_name, email, message } = req.body;
   
-    console.log("📬 New contact submission:");
+    console.log("New contact submission:");
     console.log({
       first_name,
       last_name,

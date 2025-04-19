@@ -1,32 +1,53 @@
+<!--
+  @fileoverview HTML structure for the secure contact form.
+  This file implements a semantically structured contact form with security features,
+  including honeypot fields and hidden timestamp elements.
+-->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Title with descriptive information -->
   <title>Secure Contact Form</title>
+  <!-- Link to stylesheet for visual presentation and form feedback -->
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+  <!-- Main container with appropriate semantic structure -->
   <main class="container">
     <header>
       <h1>Contact Us</h1>
     </header>
-    
+
     <section class="contact-section">
+      <!-- 
+        Form element with POST method and defined action endpoint 
+        The form is structured with fieldsets for logical grouping
+      -->
       <form id="contactForm" method="POST" action="/api/contact">
         <fieldset>
           <legend>Personal Information</legend>
-          
+
+          <!-- 
+            First name field with required attribute
+            Each form field is wrapped in a container for styling and error messages
+          -->
           <div class="form-field">
             <label for="first_name">First Name</label>
             <input type="text" id="first_name" name="first_name" required />
           </div>
 
+          <!-- Last name field with required attribute -->
           <div class="form-field">
             <label for="last_name">Last Name</label>
             <input type="text" id="last_name" name="last_name" required />
           </div>
 
+          <!-- Email field with appropriate input type and required attribute -->
           <div class="form-field">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required />
@@ -35,25 +56,41 @@
 
         <fieldset>
           <legend>Your Message</legend>
+          <!-- Message textarea for user input -->
           <div class="form-field">
             <label for="message">Message</label>
             <textarea id="message" name="message" required></textarea>
           </div>
         </fieldset>
 
-        <!-- Honeypot (hidden from users) -->
+        <!-- 
+          Honeypot field (security feature)
+          This hidden field helps detect automated bot submissions
+          Bots typically fill all available fields, while humans won't see this
+        -->
         <input type="text" name="honeypot" style="display: none;" />
 
-        <!-- Timestamp (hidden and populated by JS) -->
+        <!-- 
+          Hidden timestamp field for time-based bot detection
+          Used to measure submission timing and detect automated submissions
+          Value is set by JavaScript on page load
+        -->
         <input type="hidden" name="form_timestamp" id="form_timestamp" />
 
+        <!-- Submit button for form submission -->
         <button type="submit">Send Message</button>
       </form>
 
+      <!-- 
+        Output element for form feedback messages
+        aria-live attribute ensures screen readers announce status changes
+      -->
       <output id="responseMessage" aria-live="polite"></output>
     </section>
   </main>
 
+  <!-- Include JavaScript for form validation and submission handling -->
   <script src="script.js"></script>
 </body>
+
 </html>
