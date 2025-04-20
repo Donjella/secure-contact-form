@@ -20,7 +20,7 @@ For a detailed discussion of the security concepts, industry trends, ethical con
 
 ❗ **Important link to blog post:**
 
-[**Build a Secure Contact Form Without Plugins: A Comprehensive Yet Easy Guide**](https://donjella.github.io/2025/04/20/secure-contact-form.html)
+[**Build a Secure Contact Form Without Plugins: A Comprehensive Yet Easy Guide**](https://donjella.github.io/2025/04/20/secure-contact-form-guide.html)
 
 
 ## Key Security Features
