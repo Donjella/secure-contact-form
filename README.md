@@ -2,6 +2,7 @@
 
 A multilayered, security-focused contact form implementation that protects against spam bots and common web vulnerabilities while providing a smooth user experience.
 
+![Secure Contact Form overview](docs/screenshots/form-overview.png)
 ## Table of Contents
 1. [Project Overview](#project-overview)
 2. [Key Security Features](#key-security-features)
