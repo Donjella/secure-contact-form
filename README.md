@@ -155,51 +155,98 @@ For more efficient testing of the backend security features, you can use API tes
 2. **Testing Valid Submission**:
    ```json
    {
-     "first_name": "John",
-     "last_name": "Doe",
-     "email": "john@example.com",
+     "first_name": "Human",
+     "last_name": "User",
+     "email": "Human@example.com",
      "message": "This is a test message",
-     "form_timestamp": 1650000000000
+     "honeypot": "",
+     "form_timestamp": 1745144022625 // edit to valid timestamp
    }
    ```
 
 3. **Testing Honeypot Detection**:
    ```json
    {
-     "first_name": "John",
-     "last_name": "Doe",
-     "email": "john@example.com",
-     "message": "This is a test message",
-     "honeypot": "I am a bot",
-     "form_timestamp": 1650000000000
+     "first_name": "Fake",
+     "last_name": "Bot",
+     "email": "bot@example.com",
+     "message": "I am a bot.",
+     "honeypot": "hello",
+     "form_timestamp": 1745144022625
+   }
+   ```
+   Expected response (400 Bad Request):
+   ```json
+   {
+     "errors": [
+       {
+         "type": "field",
+         "value": "hello",
+         "msg": "Bot detected via honeypot field.",
+         "path": "honeypot",
+         "location": "body"
+       }
+     ]
    }
    ```
 
+   ![Bot-like activity detected by filling honeypot field](docs/screenshots/bot-honeypot.png)
+   
+
 4. **Testing Time-Based Validation**:
-   - Too quick (set timestamp to current time):
+   - Valid timestamp (generate a timestamp a few seconds ago):
+     ```javascript
+     // Run this in browser console to get a valid timestamp
+     Date.now()  // e.g., 1745144022625
+     ```
+     Then use this timestamp in your request:
      ```json
      {
        "first_name": "John",
        "last_name": "Doe",
        "email": "john@example.com",
        "message": "This is a test message",
-       "form_timestamp": 1714396800000
+       "honeypot": "",
+       "form_timestamp": 1745144022625
      }
      ```
-   - Too old (set timestamp to > 1 hour ago):
+   - Expired timestamp (too old):
      ```json
      {
-       "first_name": "John",
-       "last_name": "Doe",
-       "email": "john@example.com",
-       "message": "This is a test message",
-       "form_timestamp": 1650000000000
+       "first_name": "Fake",
+       "last_name": "Bot",
+       "email": "bot@example.com",
+       "message": "I am not a bot.",
+       "honeypot": "",
+       "form_timestamp": 1713500000000
      }
      ```
+     Expected response (400 Bad Request):
+     ```json
+     {
+       "errors": [
+         {
+           "type": "field",
+           "value": 1713500000000,
+           "msg": "Form expired. Please refresh the page and try again.",
+           "path": "form_timestamp",
+           "location": "body"
+         }
+       ]
+     }
+     ```
+     ![Bot-like activity detected by violating the expected time frame for form completion.](docs/screenshots/bot-timestamp.png)
 
 5. **Testing Rate Limiting**:
    - Send the same valid request multiple times in quick succession (more than 3 times within a minute)
-   - You should receive a 429 status code with a JSON error message after the third request
+   - Expected response after the third request (429 Too Many Requests):
+     ```json
+     {
+       "message": "Too many contact form submissions. Please try again later."
+     }
+     ```
+
+     ![Bot-like activity by exceeding rate limit](docs/screenshots/bot-rate-limiter.png)
 
 6. **Testing Input Validation**:
    ```json
@@ -208,7 +255,8 @@ For more efficient testing of the backend security features, you can use API tes
      "last_name": "D",
      "email": "not-an-email",
      "message": "Hi",
-     "form_timestamp": 1714396600000
+     "honeypot": "",
+     "form_timestamp": 1745144022625
    }
    ```
 
