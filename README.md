@@ -161,9 +161,10 @@ For more efficient testing of the backend security features, you can use API tes
      "email": "Human@example.com",
      "message": "This is a test message",
      "honeypot": "",
-     "form_timestamp": 1745144022625 // change this to valid timestamp
+     "form_timestamp": 1745144022625 
    }
    ```
+*Note*: Change the timestamp value to a recent Date.now() value when testing
 
 3. **Testing Honeypot Detection**:
    ```json
