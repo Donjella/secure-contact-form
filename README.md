@@ -160,7 +160,7 @@ For more efficient testing of the backend security features, you can use API tes
      "email": "Human@example.com",
      "message": "This is a test message",
      "honeypot": "",
-     "form_timestamp": 1745144022625 // edit to valid timestamp
+     "form_timestamp": 1745144022625 // change this to valid timestamp
    }
    ```
 
@@ -171,7 +171,7 @@ For more efficient testing of the backend security features, you can use API tes
      "last_name": "Bot",
      "email": "bot@example.com",
      "message": "I am a bot.",
-     "honeypot": "hello",
+     "honeypot": "I got tricked",
      "form_timestamp": 1745144022625
    }
    ```
@@ -181,7 +181,7 @@ For more efficient testing of the backend security features, you can use API tes
      "errors": [
        {
          "type": "field",
-         "value": "hello",
+         "value": "I got tricked",
          "msg": "Bot detected via honeypot field.",
          "path": "honeypot",
          "location": "body"
@@ -210,13 +210,15 @@ For more efficient testing of the backend security features, you can use API tes
        "form_timestamp": 1745144022625
      }
      ```
+     For instance:
+
    - Expired timestamp (too old):
      ```json
      {
        "first_name": "Fake",
        "last_name": "Bot",
        "email": "bot@example.com",
-       "message": "I am not a bot.",
+       "message": "I am a bot.",
        "honeypot": "",
        "form_timestamp": 1713500000000
      }
