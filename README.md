@@ -16,7 +16,12 @@ A multilayered, security-focused contact form implementation that protects again
 
 This project is a prototype implementation of a secure contact form with multiple layers of protection. It demonstrates practical security measures that can be implemented to protect web forms from spam bots and malicious actors. This repository contains both the frontend interface and backend processing logic.
 
-For a detailed discussion of the security concepts, industry trends, ethical considerations, and the development process, please refer to the accompanying blog post: **"Build a Secure Contact Form Without Plugins: A Comprehensive Yet Easy Guide"**.
+For a detailed discussion of the security concepts, industry trends, ethical considerations, and the development process, please refer to the accompanying blog post:
+
+❗ **Important link to blog post:**
+
+[**Build a Secure Contact Form Without Plugins: A Comprehensive Yet Easy Guide**](https://donjella.github.io/2025/04/20/secure-contact-form.html)
+
 
 ## Key Security Features
 
